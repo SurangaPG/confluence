@@ -3,5 +3,10 @@
   "require": {
     "guzzle/guzzle": "^3.9",
     "tlr/html-table-builder": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "surangapg\\confluence\\": "src"
+    }
   }
 }
