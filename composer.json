@@ -1,0 +1,7 @@
+{
+  "name": "surangapg/confluence",
+  "require": {
+    "guzzle/guzzle": "^3.9",
+    "tlr/html-table-builder": "^1.1"
+  }
+}
