@@ -7,7 +7,7 @@
 namespace surangapg\confluence;
 
 use Guzzle\Http\Client;
-use Guzzle\Http\ClientInterface;
+use Guzzle\Http\Message\Response;
 
 class Confluence {
 
@@ -48,6 +48,39 @@ class Confluence {
     ];
 
     $this->setOptions($options);
+  }
+
+  /**
+   * Load in a page from confluence based on it's id.
+   *
+   * @param $id
+   *   Page id from confluence.
+   *
+   * @return object|false
+   *  Page object from confluence if it could be loaded or false.
+   */
+  public function getPage($id) {
+    /** @var Response $response */
+    $response = $this->client->get('/wiki/rest/api/content/' . $id, $this->options);
+    if ($response->getStatusCode() == 200) {
+      $response = json_decode($response->getBody()->getContents());
+      return $response;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Overwrite the page on confluence.
+   *
+   * @param integer $id
+   *   The id of the page to overwrite.
+   * @param array $data
+   *   The array of data, see the confluence api documentation for more info.
+   *
+   * @return Response
+   */
+  public function setPage($id, $data) {
+    return $this->client->put('/wiki/rest/api/content/' . $id, $this->options + ['json' => $data]);
   }
 
   /**
